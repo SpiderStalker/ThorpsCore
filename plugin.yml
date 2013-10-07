@@ -1,6 +1,6 @@
 name: ThorpsCraft
-version: 0.1
+version: 0.1.0
 description: ToDo
-main: com.thorpscraft.imasonite.PluginCore
+main: com.thorpscraft.imasonite.ThorpsCraft
 author: iMasonite
 website: http://www.thorpscraft.com
