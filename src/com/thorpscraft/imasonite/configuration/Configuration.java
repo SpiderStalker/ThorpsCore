@@ -1,11 +1,6 @@
+
 package com.thorpscraft.imasonite.configuration;
-
-/**
- * General configuration operations and methods and file handling.
+/** General configuration operations and methods and file handling.
  * 
- * @author Michael Mason
- * 
- */
-public class Configuration {
-
-}
+ * @author Michael Mason */
+public abstract class Configuration {}

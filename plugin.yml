@@ -1,6 +1,14 @@
-name: ThorpsCraft
-version: 0.1.0
+name: ThorpsCore
+version: 0.1.1
 description: ToDo
-main: com.thorpscraft.imasonite.ThorpsCraft
+main: com.thorpscraft.imasonite.ThorpsCore
 author: iMasonite
 website: http://www.thorpscraft.com
+commands:
+  returnme: 
+      description: override cmd.      
+      usage: /say <message>.
+permissions:
+  thorpscore.messages.say:
+    description: perms for /say
+    default: op
