@@ -10,7 +10,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.thorpscraft.imasonite.configuration.Configuration;
-import com.thorpscraft.imasonite.events.CommandListener;
+import com.thorpscraft.imasonite.events.*;
 import com.thorpscraft.imasonite.integration.Vault;
 
 public class ThorpsCore extends JavaPlugin {
@@ -20,6 +20,7 @@ public class ThorpsCore extends JavaPlugin {
 	public static ThorpsCore		instance;
 	public static MessageSender		messageSender	= new MessageSender(instance);
 	public static CommandListener	CommandListener	= new CommandListener(instance);
+	public static PlayerListener	PlayerListener	= new PlayerListener(instance);
 	
 	public Configuration			configuration;
 	
@@ -41,7 +42,7 @@ public class ThorpsCore extends JavaPlugin {
 			getServer().getPluginManager().disablePlugin(this);
 			return;
 		}
-		instance.regListener();
+		instance.regEvents();
 		logServer(Level.INFO, "ThorpsCore - Enabled");
 	}
 	
@@ -82,8 +83,9 @@ public class ThorpsCore extends JavaPlugin {
 		return instance;
 	}
 	
-	public void regListener() {
+	public void regEvents() {
 		PluginManager pluginManager = getServer().getPluginManager();
 		pluginManager.registerEvents(ThorpsCore.CommandListener, instance);
+		pluginManager.registerEvents(ThorpsCore.PlayerListener, instance);
 	}
 }
