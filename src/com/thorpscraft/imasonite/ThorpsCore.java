@@ -11,13 +11,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.thorpscraft.imasonite.configuration.Configuration;
 import com.thorpscraft.imasonite.events.CommandListener;
+import com.thorpscraft.imasonite.integration.Vault;
 
 public class ThorpsCore extends JavaPlugin {
 	public static Logger			logger			= Logger.getLogger("Minecraft");
 	
+	/* classes */
 	public static ThorpsCore		instance;
 	public static MessageSender		messageSender	= new MessageSender(instance);
-	private final CommandListener	CommandListener	= new CommandListener(instance);
+	public static CommandListener	CommandListener	= new CommandListener(instance);
+	
 	public Configuration			configuration;
 	
 	// TODO: Move to config
@@ -26,14 +29,19 @@ public class ThorpsCore extends JavaPlugin {
 	@Override
 	public void onLoad() {
 		instance = this;
-		logServer(Level.INFO, "---------------------------");
+		logServer(Level.INFO, "------------------------------------------------------");
 		logServer(Level.INFO, " ThorpsCore ------ Loading ");
-		logServer(Level.INFO, "---------------------------");
+		logServer(Level.INFO, "------------------------------------------------------");
 	}
 	
 	@Override
 	public void onEnable() {
-		regListener();
+		if (!Vault.initialize()) {
+			logServer(Level.SEVERE, "Disabled due to Vault not being found! Please install it.");
+			getServer().getPluginManager().disablePlugin(this);
+			return;
+		}
+		instance.regListener();
 		logServer(Level.INFO, "ThorpsCore - Enabled");
 	}
 	
@@ -44,18 +52,38 @@ public class ThorpsCore extends JavaPlugin {
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if (cmd.getName().equalsIgnoreCase("returnme")) {
-			return true;
+		boolean returnType = false;
+		
+		// Player player = null;
+		// if (sender instanceof Player) {
+		// player = (Player) sender;
+		// }
+		
+		switch (cmd.getName().toLowerCase()) {
+			case "thorps":
+				
+				returnType = true;
+				break;
+			case "returnme":
+				// HACK: Just here for now, will kill bug band-aid later.
+				returnType = true;
+				break;
+			default:
+				returnType = false;
 		}
-		return false;
+		return returnType;
 	}
 	
 	public static void logServer(Level level, String logEntry) {
 		logger.log(level, pluginPrefix + logEntry);
 	}
 	
+	public static ThorpsCore getPlugin() {
+		return instance;
+	}
+	
 	public void regListener() {
 		PluginManager pluginManager = getServer().getPluginManager();
-		pluginManager.registerEvents(instance.CommandListener, instance);
+		pluginManager.registerEvents(ThorpsCore.CommandListener, instance);
 	}
 }

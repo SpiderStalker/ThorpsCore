@@ -1,5 +1,5 @@
 
-package com.thorpscraft.imasonite.abstraction.enums;
+package com.thorpscraft.imasonite.enums;
 
 import java.util.HashMap;
 import java.util.Map;
