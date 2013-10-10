@@ -10,7 +10,8 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.thorpscraft.imasonite.configuration.Configuration;
-import com.thorpscraft.imasonite.events.*;
+import com.thorpscraft.imasonite.events.CommandListener;
+import com.thorpscraft.imasonite.events.PlayerListener;
 import com.thorpscraft.imasonite.integration.Vault;
 
 public class ThorpsCore extends JavaPlugin {
