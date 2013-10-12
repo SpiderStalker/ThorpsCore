@@ -16,14 +16,16 @@ public class ThorpsCore extends JavaPlugin {
 	private TcCommandExecutor commandExecutor;
 	
 	public static Logger logger = Logger.getLogger("Minecraft");
-	public static String pluginName = thorpsCore.getName();
+	private static String pluginName;
 	
 	@Override
 	public void onLoad() {
 		thorpsCore = this;
+		pluginName = thorpsCore.getName();
 		configFile = getConfig();
 		configFile.options().copyDefaults(true);
 		saveDefaultConfig();
+		
 		logServer(Level.INFO, "------------------------------------------------------");
 		logServer(Level.INFO, "    ----- " + pluginName + " ----- Loading ----- ");
 		
@@ -31,13 +33,14 @@ public class ThorpsCore extends JavaPlugin {
 		
 		logServer(Level.INFO, "------------------------------------------------------");
 		
-		commandExecutor = new TcCommandExecutor(this);
-		getCommand("Thorps").setExecutor(commandExecutor);
 	}
 	
 	@Override
 	public void onEnable() {
 		logServer(Level.INFO, pluginName + " - Enabled");
+		
+		commandExecutor = new TcCommandExecutor(this);
+		getCommand("ThorpsCore").setExecutor(commandExecutor);
 	}
 	
 	@Override
