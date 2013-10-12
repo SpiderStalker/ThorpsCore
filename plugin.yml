@@ -7,26 +7,22 @@ website: http://www.thorpscraft.com
 dev-url: https://github.com/iMasonite/ThorpsCore
 softdepend: [Vault]
 commands:
-
-  # Debug #
+  thorps: 
+     description: override cmd.
+     aliases: th
   returnme: 
       description: override cmd.      
 permissions:
-  # Global #
   thorpscore.*:
     description: Gives access to all thorpscore commands.
-    default: op
+    default: false
     children:
       thorpscore.messages.*: true
-        
-  # Categoty #      
   thorpscore.messages.*:
     description: Gives access to all thorpscore message features.
-    default: op
+    default: false
     children:
       thorpscore.messages.say: true
-        
-  # Singletons #      
   thorpscore.messages.say:
     description: Gives access to /say command.
-    default: op
+    default: false

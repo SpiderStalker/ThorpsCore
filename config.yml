@@ -1,0 +1,5 @@
+Debug:
+  ## Console, if true, debug messages will be displayed in the console
+  Console: false
+  ## Stack, if true, common errors will be printedin full.
+  Stack: true

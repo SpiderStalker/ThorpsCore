@@ -4,89 +4,53 @@ package com.thorpscraft.imasonite;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.PluginManager;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.thorpscraft.imasonite.configuration.Configuration;
-import com.thorpscraft.imasonite.events.CommandListener;
-import com.thorpscraft.imasonite.events.PlayerListener;
-import com.thorpscraft.imasonite.integration.Vault;
+import com.thorpscraft.imasonite.locale.L10n;
 
 public class ThorpsCore extends JavaPlugin {
-	public static Logger			logger			= Logger.getLogger("Minecraft");
 	
-	/* classes */
-	public static ThorpsCore		instance;
-	public static MessageSender		messageSender	= new MessageSender(instance);
-	public static CommandListener	CommandListener	= new CommandListener(instance);
-	public static PlayerListener	PlayerListener	= new PlayerListener(instance);
+	public static ThorpsCore thorpsCore;
+	public FileConfiguration configFile;
+	private TcCommandExecutor commandExecutor;
 	
-	public Configuration			configuration;
-	
-	// TODO: Move to config
-	public static String			pluginPrefix	= "[ThorpsCore]: ";
+	public static Logger logger = Logger.getLogger("Minecraft");
+	public static String pluginName = thorpsCore.getName();
 	
 	@Override
 	public void onLoad() {
-		instance = this;
+		thorpsCore = this;
+		configFile = getConfig();
+		configFile.options().copyDefaults(true);
+		saveDefaultConfig();
 		logServer(Level.INFO, "------------------------------------------------------");
-		logServer(Level.INFO, " ThorpsCore ------ Loading ");
+		logServer(Level.INFO, "    ----- " + pluginName + " ----- Loading ----- ");
+		
+		L10n.init(thorpsCore);
+		
 		logServer(Level.INFO, "------------------------------------------------------");
+		
+		commandExecutor = new TcCommandExecutor(this);
+		getCommand("Thorps").setExecutor(commandExecutor);
 	}
 	
 	@Override
 	public void onEnable() {
-		if (!Vault.initialize()) {
-			logServer(Level.SEVERE, "Disabled due to Vault not being found! Please install it.");
-			getServer().getPluginManager().disablePlugin(this);
-			return;
-		}
-		instance.regEvents();
-		logServer(Level.INFO, "ThorpsCore - Enabled");
+		logServer(Level.INFO, pluginName + " - Enabled");
 	}
 	
 	@Override
 	public void onDisable() {
-		logServer(Level.INFO, "ThorpsCore - Disabled");
-	}
-	
-	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		boolean returnType = false;
-		
-		// Player player = null;
-		// if (sender instanceof Player) {
-		// player = (Player) sender;
-		// }
-		
-		switch (cmd.getName().toLowerCase()) {
-			case "thorps":
-				
-				returnType = true;
-				break;
-			case "returnme":
-				// HACK: Just here for now, will kill bug band-aid later.
-				returnType = true;
-				break;
-			default:
-				returnType = false;
-		}
-		return returnType;
+		logServer(Level.INFO, pluginName + " - Disabled");
 	}
 	
 	public static void logServer(Level level, String logEntry) {
-		logger.log(level, pluginPrefix + logEntry);
+		logger.log(level, "[" + pluginName + "]" + logEntry);
 	}
 	
 	public static ThorpsCore getPlugin() {
-		return instance;
+		return thorpsCore;
 	}
 	
-	public void regEvents() {
-		PluginManager pluginManager = getServer().getPluginManager();
-		pluginManager.registerEvents(ThorpsCore.CommandListener, instance);
-		pluginManager.registerEvents(ThorpsCore.PlayerListener, instance);
-	}
 }
