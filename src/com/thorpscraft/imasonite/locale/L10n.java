@@ -9,8 +9,12 @@ import java.net.URLClassLoader;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 
 import org.bukkit.plugin.Plugin;
+
+import com.thorpscraft.imasonite.ThorpsCore;
+import com.thorpscraft.imasonite.Tools;
 
 public class L10n {
 	private static final String BUNDLE_NAME = "Localization";
@@ -19,7 +23,11 @@ public class L10n {
 	private static ResourceBundle RESOURCE_BUNDLE0;
 	private static ResourceBundle RESOURCE_BUNDLE1;
 	
+	public static int CONTENT_VERSION;
 	public static String ERROR_PERMISSION;
+	public static String NULL_MESSAGE;
+	public static String CMD_SAY_FORMAT_PLAYER;
+	public static String CMD_SAY_FORMAT_SERVER;
 	
 	private L10n() {}
 	
@@ -30,7 +38,10 @@ public class L10n {
 			try {
 				return RESOURCE_BUNDLE1.getString(key);
 			} catch (Exception ee) {
-				return '!' + key + '!';
+				//TODO: Check perms display to admin not all users, try for redundancy.
+				//		and insert new on ver change. @iMasonite
+				return Tools.formatString("&d Localization Resource Property:\n&e%1% &dNot Found!\n"
+						+ "Please Update the Localization.properties config file.", key);
 			}
 		}
 	}
@@ -48,6 +59,7 @@ public class L10n {
 			if (!(locale.equals(""))) {
 				locale = "_".concat(locale);
 			}
+			
 		} catch (MissingResourceException e) {
 		}
 		
@@ -58,7 +70,11 @@ public class L10n {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (MissingResourceException e) {
+			
+			ThorpsCore.logServer(Level.INFO, "Save New Resource Bundle: " + BUNDLE_NAME.concat(locale).replace('.', '/').concat(".properties"));
+			
 			thorpsPlugin.saveResource(BUNDLE_NAME.concat(locale).replace('.', '/').concat(".properties"), false);
+			
 			try {
 				URL[] urls = { thorpsPlugin.getDataFolder().toURI().toURL() };
 				RESOURCE_BUNDLE0 = ResourceBundle.getBundle(BUNDLE_NAME, Locale.getDefault(), new URLClassLoader(urls), new UTF8Control());

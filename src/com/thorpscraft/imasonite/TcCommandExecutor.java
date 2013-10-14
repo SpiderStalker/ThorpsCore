@@ -23,16 +23,23 @@ public class TcCommandExecutor implements CommandExecutor, TabCompleter {
 		boolean returnType = false;
 		boolean consoleSender = !(sender instanceof Player);
 		
+		if (cmd.getName().equalsIgnoreCase("tcfix")) {
+			return true;
+		}
+		
 		if (!consoleSender) {
 			switch (cmd.getName().toLowerCase()) {
-				case "thorpscore": case "thorps": case "th":
-					String permission = "thorpscore.test";
-					if (!sender.hasPermission(permission)) {
-						Tools.formatMsg(sender, L10n.ERROR_PERMISSION, label, permission);
+				case "thorpscore":
+				case "thorps":
+				case "th":
+					String permissiontest = "thorpscore.test";
+					if (!sender.hasPermission(permissiontest)) {
+						Tools.formatMsg(sender, L10n.ERROR_PERMISSION, label, permissiontest);
 						return false;
 					}
+					// -------------
 					Tools.formatMsg(sender, "&aHas Perms! :D");
-					
+					// -------------
 					returnType = true;
 					break;
 				default:
@@ -40,8 +47,12 @@ public class TcCommandExecutor implements CommandExecutor, TabCompleter {
 			}
 		} else {
 			switch (cmd.getName().toLowerCase()) {
-				case "thorpscore": case "thorps": case "th":
+				case "thorpscore":
+				case "thorps":
+				case "th":
+					// -------------
 					Tools.formatMsg(sender, "This command is on Console");
+					// -------------
 					returnType = true;
 					break;
 				default:

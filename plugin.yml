@@ -1,20 +1,26 @@
 name: ThorpsCore
-version: 0.1.3
+version: 0.2.0
 description: ToDo
 main: com.thorpscraft.imasonite.ThorpsCore
 author: iMasonite
 website: http://www.thorpscraft.com
 dev-url: https://github.com/iMasonite/ThorpsCore
 commands:
-  ThorpsCore:
-    description: Main Command.
+  thorpscore:
+    description: Main Command. aliases - thorpscore|thorps|th
     aliases: [thorps, th]
+  tcnull:
+    description: Fixes Events, not for general use.
 permissions:
   thorpscore.*:
     description: Gives access to all commands
     default: false
     children:
+      thorpscore.say: true
       thorpscore.test: true
+  thorpscore.say:
+    description: Permission to use, Override the default say command.
+    default: false
   thorpscore.test:
     description: test...
     default: false

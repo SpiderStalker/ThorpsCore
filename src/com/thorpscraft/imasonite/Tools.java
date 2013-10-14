@@ -21,4 +21,9 @@ public class Tools {
 		return ChatColor.stripColor(format(text, replacement));
 		
 	}
+	
+	public static String formatString(String text, String... replacement) {
+		return format(text, replacement);
+	}
+	
 }

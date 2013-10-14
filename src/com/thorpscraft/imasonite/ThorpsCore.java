@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.thorpscraft.imasonite.locale.L10n;
@@ -14,6 +15,7 @@ public class ThorpsCore extends JavaPlugin {
 	public static ThorpsCore thorpsCore;
 	public FileConfiguration configFile;
 	private TcCommandExecutor commandExecutor;
+	private TcCommandListener commandListener = new TcCommandListener(this);
 	
 	public static Logger logger = Logger.getLogger("Minecraft");
 	private static String pluginName;
@@ -25,13 +27,9 @@ public class ThorpsCore extends JavaPlugin {
 		configFile = getConfig();
 		configFile.options().copyDefaults(true);
 		saveDefaultConfig();
-		
-		logServer(Level.INFO, "------------------------------------------------------");
-		logServer(Level.INFO, "    ----- " + pluginName + " ----- Loading ----- ");
+		// -------------------------------------------
 		
 		L10n.init(thorpsCore);
-		
-		logServer(Level.INFO, "------------------------------------------------------");
 		
 	}
 	
@@ -41,6 +39,8 @@ public class ThorpsCore extends JavaPlugin {
 		
 		commandExecutor = new TcCommandExecutor(this);
 		getCommand("ThorpsCore").setExecutor(commandExecutor);
+		registerListener();
+		
 	}
 	
 	@Override
@@ -48,8 +48,14 @@ public class ThorpsCore extends JavaPlugin {
 		logServer(Level.INFO, pluginName + " - Disabled");
 	}
 	
+	public void registerListener() {
+		
+		PluginManager pm = getServer().getPluginManager();
+		pm.registerEvents(this.commandListener, this);
+	}
+	
 	public static void logServer(Level level, String logEntry) {
-		logger.log(level, "[" + pluginName + "]" + logEntry);
+		logger.log(level, "[" + pluginName + "] " + logEntry);
 	}
 	
 	public static ThorpsCore getPlugin() {
