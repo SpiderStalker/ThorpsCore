@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 public class Tools {
+	
 	public static String format(String text, String... replacement) {
 		String output = text;
 		for (int i = 0; i < replacement.length; i++) {

@@ -1,5 +1,5 @@
+UpdateCheck: true
 Debug:
-  ## Console, if true, debug messages will be displayed in the console
+  Enabled: true
   Console: false
-  ## Stack, if true, common errors will be printedin full.
   Stack: true

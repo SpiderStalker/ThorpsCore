@@ -12,11 +12,13 @@ import org.bukkit.entity.Player;
 import com.thorpscraft.imasonite.locale.L10n;
 
 public class TcCommandExecutor implements CommandExecutor, TabCompleter {
-	private ThorpsCore thorpsPlugin;
+	ThorpsCore plugin;
 	
 	public TcCommandExecutor(ThorpsCore plugin) {
-		this.thorpsPlugin = plugin;
+		this.plugin = plugin;
 	}
+	
+	// -----------------------------------------------
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -68,8 +70,4 @@ public class TcCommandExecutor implements CommandExecutor, TabCompleter {
 		return null;
 	}
 	
-	/** @return the thorpsPlugin */
-	public ThorpsCore getThorpsPlugin() {
-		return thorpsPlugin;
-	}
 }

@@ -38,10 +38,9 @@ public class L10n {
 			try {
 				return RESOURCE_BUNDLE1.getString(key);
 			} catch (Exception ee) {
-				//TODO: Check perms display to admin not all users, try for redundancy.
-				//		and insert new on ver change. @iMasonite
-				return Tools.formatString("&d Localization Resource Property:\n&e%1% &dNot Found!\n"
-						+ "Please Update the Localization.properties config file.", key);
+				// TODO: Check perms display to admin not all users, try for redundancy.
+				// and insert new on ver change. @iMasonite
+				return Tools.formatString("&d Localization Resource Property:\n&e%1% &dNot Found!\n" + "Please Update the Localization.properties config file.", key);
 			}
 		}
 	}

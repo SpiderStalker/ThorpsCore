@@ -13,11 +13,14 @@ import org.bukkit.event.server.ServerCommandEvent;
 import com.thorpscraft.imasonite.locale.L10n;
 
 public class TcCommandListener implements Listener {
+	
 	ThorpsCore plugin;
 	
 	public TcCommandListener(ThorpsCore instance) {
 		this.plugin = instance;
 	}
+	
+	// -----------------------------------------------
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
